@@ -9,6 +9,8 @@ Pre-install and config risk checks for MCP servers and agent tools.
 
 The goal is not to prove that a server is safe. The goal is to make the first review obvious: recent maintenance, adoption signals, package hygiene, pinned installs, visible authorization, literal secrets, filesystem scope, and privileged container access.
 
+Works today from GitHub. npm publishing can come later.
+
 ## Why This Exists
 
 MCP is useful because it lets agents use real tools. That also means MCP server configuration deserves a quick review before it runs on a developer machine or inside CI.
@@ -17,12 +19,17 @@ The MCP specification notes that local servers can pose security risks when they
 
 ## Quick Start
 
-Run the public GitHub version without cloning:
+Run directly from the public GitHub repo:
 
 ```bash
-npm exec --yes --package github:hueilau/mcp-risk -- mcp-risk --help
 npm exec --yes --package github:hueilau/mcp-risk -- mcp-risk check chrome-devtools-mcp
 npm exec --yes --package github:hueilau/mcp-risk -- mcp-risk scan .cursor/mcp.json
+```
+
+Expected `check` shape:
+
+```text
+97 A Low visible metadata risk.
 ```
 
 Or clone and run locally:
@@ -32,6 +39,7 @@ git clone https://github.com/hueilau/mcp-risk.git
 cd mcp-risk
 npm ci
 npm run build
+node dist/cli.js check chrome-devtools-mcp --quiet
 node dist/cli.js scan examples/risky.mcp.json
 ```
 
@@ -66,6 +74,8 @@ mcp-risk check fake-package --fail-under 80
 - License, repo links, issue links, keywords, and maintainers
 - Obvious risk flags such as archived repos or missing license metadata
 
+`check` is metadata-only. It does not install or execute the target package.
+
 ## Scan MCP Config
 
 ```bash
@@ -87,6 +97,13 @@ Scan a Claude Desktop config on macOS:
 
 ```bash
 mcp-risk scan ~/Library/Application\ Support/Claude/claude_desktop_config.json
+```
+
+Expected `scan` shape:
+
+```text
+MCP Risk scan
+Servers: 2  Findings: 5  Max severity: critical
 ```
 
 ## Scan Checks
@@ -123,14 +140,30 @@ Exit codes:
 - `1`: command could not run, parse input, or fetch required metadata.
 - `2`: `check --fail-under` or `scan --fail-on` failed.
 
+That means this command is expected to exit `2` for the intentionally risky fixture:
+
+```bash
+node dist/cli.js scan examples/risky.mcp.json --fail-on high
+```
+
 ## Development
 
 ```bash
 npm ci
 npm run check
 npm run build
+node dist/cli.js check chrome-devtools-mcp --quiet
 node dist/cli.js scan examples/risky.mcp.json
+npm pack --dry-run
 ```
+
+The package tarball includes only the compiled CLI, examples, README, license, and package metadata.
+
+## Limitations
+
+- Scores are review aids, not security guarantees.
+- `check` depends on public npm and GitHub metadata, which can be incomplete.
+- `scan` is conservative and rule-based; open a false-positive issue when a rule is too noisy.
 
 ## Contributing
 
