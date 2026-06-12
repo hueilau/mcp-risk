@@ -1,0 +1,27 @@
+name: Config scan false positive
+description: Report an MCP config finding that is too noisy or incorrect.
+title: "Config false positive: "
+labels: ["false-positive", "scan"]
+body:
+  - type: textarea
+    id: config
+    attributes:
+      label: Redacted config snippet
+      description: Remove secrets, private URLs, and private filesystem paths before posting.
+      render: json
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: mcp-risk output
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+      description: Which finding should change, and why?
+    validations:
+      required: true

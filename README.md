@@ -2,6 +2,11 @@
 
 Pre-install and config risk checks for MCP servers and agent tools.
 
+[![CI](https://github.com/hueilau/mcp-risk/actions/workflows/ci.yml/badge.svg)](https://github.com/hueilau/mcp-risk/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Node.js >=22](https://img.shields.io/badge/node-%3E%3D22-339933.svg)](package.json)
+[![MCP](https://img.shields.io/badge/MCP-security-orange.svg)](https://modelcontextprotocol.io/)
+
 `mcp-risk` gives developers two quick review loops:
 
 - `mcp-risk check <target>` scores an npm package or GitHub repo before you install an MCP server.
@@ -10,6 +15,14 @@ Pre-install and config risk checks for MCP servers and agent tools.
 The goal is not to prove that a server is safe. The goal is to make the first review obvious: recent maintenance, adoption signals, package hygiene, pinned installs, visible authorization, literal secrets, filesystem scope, and privileged container access.
 
 Works today from GitHub. npm publishing can come later.
+
+## Features
+
+- Pre-install package and repo scoring for MCP servers and agent tools.
+- Static MCP config scanning for common local and remote server risks.
+- Human-readable, JSON, and Markdown output for local use or CI comments.
+- CI-friendly thresholds with stable exit codes.
+- Small TypeScript CLI with deterministic tests and fixture-based provider tests.
 
 ## Why This Exists
 
@@ -60,6 +73,8 @@ mcp-risk scan
 
 ## Check A Package Or Repo
 
+Use `check` when a README, marketplace, or agent suggests installing a new MCP package:
+
 ```bash
 mcp-risk check chrome-devtools-mcp
 mcp-risk check @playwright/mcp --quiet
@@ -77,6 +92,8 @@ mcp-risk check fake-package --fail-under 80
 `check` is metadata-only. It does not install or execute the target package.
 
 ## Scan MCP Config
+
+Use `scan` when you already have an MCP config and want to review what it would run:
 
 ```bash
 mcp-risk scan examples/risky.mcp.json
@@ -165,6 +182,17 @@ The package tarball includes only the compiled CLI, examples, README, license, a
 - `check` depends on public npm and GitHub metadata, which can be incomplete.
 - `scan` is conservative and rule-based; open a false-positive issue when a rule is too noisy.
 
+## Project Status
+
+This is an early OSS wedge: useful today, intentionally small, and ready for focused rule contributions.
+
+Near-term roadmap:
+
+- More real-world MCP client config fixtures.
+- Safer-config examples for popular MCP servers.
+- SARIF or GitHub annotation output for security workflows.
+- Optional npm publication once the CLI surface settles.
+
 ## Contributing
 
 Good first contributions:
@@ -174,4 +202,4 @@ Good first contributions:
 - Add scoring signals for package or repo metadata.
 - Add output adapters for security tools.
 
-Keep rules explainable. A finding should tell users what to review or change.
+See [CONTRIBUTING.md](CONTRIBUTING.md). Keep rules explainable: a finding should tell users what to review or change.
