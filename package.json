@@ -8,6 +8,7 @@
   },
   "files": [
     "dist",
+    "examples",
     "README.md",
     "LICENSE"
   ],
@@ -16,7 +17,6 @@
     "dev": "tsx src/cli.ts",
     "test": "vitest run",
     "check": "npm run typecheck && npm test",
-    "prepack": "npm run build",
     "prepare": "npm run build",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },

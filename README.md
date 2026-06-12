@@ -15,16 +15,34 @@ MCP is useful because it lets agents use real tools. That also means MCP server 
 
 The MCP specification notes that local servers can pose security risks when they run with the client user's privileges, and that HTTP transports should use authorization or another strong access-control mechanism. `mcp-risk` turns those practical concerns into simple checks.
 
-## Install
+## Quick Start
 
-Run without installing:
+Run the public GitHub version without cloning:
+
+```bash
+npm exec --yes --package github:hueilau/mcp-risk -- mcp-risk --help
+npm exec --yes --package github:hueilau/mcp-risk -- mcp-risk check chrome-devtools-mcp
+npm exec --yes --package github:hueilau/mcp-risk -- mcp-risk scan .cursor/mcp.json
+```
+
+Or clone and run locally:
+
+```bash
+git clone https://github.com/hueilau/mcp-risk.git
+cd mcp-risk
+npm ci
+npm run build
+node dist/cli.js scan examples/risky.mcp.json
+```
+
+After the package is published to npm, these shorter commands will work:
 
 ```bash
 npx mcp-risk check chrome-devtools-mcp
 npx mcp-risk scan .cursor/mcp.json
 ```
 
-Or install globally:
+You can also install globally from npm after publication:
 
 ```bash
 npm install -g mcp-risk
@@ -90,17 +108,26 @@ mcp-risk scan ~/Library/Application\ Support/Claude/claude_desktop_config.json
 
 ## CI
 
+Use the GitHub package before npm publication:
+
 ```yaml
 - name: Scan MCP config
-  run: npx mcp-risk scan --fail-on high
+  run: npm exec --yes --package github:hueilau/mcp-risk -- mcp-risk scan --fail-on high
 ```
+
+After npm publication, the command can be shortened to `npx mcp-risk scan --fail-on high`.
+
+Exit codes:
+
+- `0`: command completed and no configured threshold failed.
+- `1`: command could not run, parse input, or fetch required metadata.
+- `2`: `check --fail-under` or `scan --fail-on` failed.
 
 ## Development
 
 ```bash
 npm ci
-npm test
-npm run typecheck
+npm run check
 npm run build
 node dist/cli.js scan examples/risky.mcp.json
 ```
