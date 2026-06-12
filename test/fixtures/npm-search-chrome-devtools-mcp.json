@@ -1,0 +1,44 @@
+{
+  "objects": [
+    {
+      "downloads": {
+        "weekly": 2549079,
+        "monthly": 10000000
+      },
+      "dependents": "32",
+      "package": {
+        "name": "chrome-devtools-mcp",
+        "version": "0.7.1",
+        "description": "Chrome DevTools for coding agents",
+        "keywords": ["mcp", "chrome", "devtools"],
+        "license": "Apache-2.0",
+        "date": "2026-06-11T14:56:51.000Z",
+        "publisher": {
+          "username": "google"
+        },
+        "maintainers": [
+          {
+            "username": "google"
+          }
+        ],
+        "links": {
+          "homepage": "https://npmjs.org/package/chrome-devtools-mcp",
+          "repository": "git+https://github.com/ChromeDevTools/chrome-devtools-mcp.git",
+          "bugs": "https://github.com/ChromeDevTools/chrome-devtools-mcp/issues",
+          "npm": "https://www.npmjs.com/package/chrome-devtools-mcp"
+        }
+      },
+      "score": {
+        "final": 95,
+        "detail": {
+          "popularity": 1,
+          "quality": 1,
+          "maintenance": 1
+        }
+      },
+      "flags": {
+        "insecure": 0
+      }
+    }
+  ]
+}

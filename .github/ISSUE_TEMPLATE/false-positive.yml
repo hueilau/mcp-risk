@@ -1,0 +1,25 @@
+name: False positive
+description: Report a package or repo that mcp-risk scored too harshly.
+title: "False positive: "
+labels: ["false-positive"]
+body:
+  - type: input
+    id: target
+    attributes:
+      label: Target
+      description: npm package, GitHub URL, or owner/repo.
+    validations:
+      required: true
+  - type: textarea
+    id: report
+    attributes:
+      label: Report output
+      description: Paste the mcp-risk output.
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why should this score change?
+    validations:
+      required: true

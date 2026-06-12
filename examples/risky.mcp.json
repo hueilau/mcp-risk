@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "floating-filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem@latest", "/"],
+      "env": {
+        "GITHUB_TOKEN": "ghp_replace_me"
+      }
+    },
+    "remote-no-auth": {
+      "url": "http://mcp.example.com/mcp"
+    }
+  }
+}

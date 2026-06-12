@@ -1,0 +1,26 @@
+name: Rule proposal
+description: Suggest a deterministic scoring rule.
+title: "Rule proposal: "
+labels: ["rule"]
+body:
+  - type: textarea
+    id: signal
+    attributes:
+      label: Signal
+      description: What should mcp-risk check?
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence source
+      description: Which public metadata or API exposes this signal?
+    validations:
+      required: true
+  - type: textarea
+    id: scoring
+    attributes:
+      label: Suggested scoring
+      description: How should points be awarded or removed?
+    validations:
+      required: true
